@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Shop.Data.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Shop.Data.Entities
+namespace Shop.Models
 {
-    public class City
+    public class CityViewModel
     {
         public int Id { get; set; }
 
@@ -15,8 +12,6 @@ namespace Shop.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Name { get; set; }
 
-        public State State { get; set; }
-
-        public ICollection<User> Users { get; set; }
+        public int  StateId { get; set; }
     }
 }
