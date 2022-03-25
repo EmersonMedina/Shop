@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Data.Entities;
@@ -7,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
-        private readonly DataContext _context; 
+        private readonly DataContext _context;
         public CategoriesController(DataContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
         [HttpGet]
@@ -76,7 +78,7 @@ namespace Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Category category )
+        public async Task<IActionResult> Edit(int id, Category category)
         {
             if (id != category.Id)
             {

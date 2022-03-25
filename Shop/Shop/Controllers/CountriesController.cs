@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Data.Entities;
 using Shop.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shop.Controllers
 {
+    //TODO: arreglar para que reconozca el rol del usuario logueado
+    [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
         private readonly DataContext _context;
@@ -241,7 +242,7 @@ namespace Shop.Controllers
 
             State state = await _context.States
                 .Include(s => s.Country)
-                .FirstOrDefaultAsync(s => s.Id == id); 
+                .FirstOrDefaultAsync(s => s.Id == id);
 
             if (state == null)
             {
@@ -253,7 +254,7 @@ namespace Shop.Controllers
                 CountryId = state.Country.Id,
                 Id = state.Id,
                 Name = state.Name
-            }; 
+            };
 
             return View(model);
         }
@@ -275,11 +276,11 @@ namespace Shop.Controllers
                     {
                         Id = model.Id,
                         Name = model.Name
-                    }; 
+                    };
 
                     _context.Update(state);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new {Id = model.CountryId });
+                    return RedirectToAction(nameof(Details), new { Id = model.CountryId });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -350,7 +351,7 @@ namespace Shop.Controllers
                 .FirstOrDefaultAsync(s => s.Id == id);
             _context.States.Remove(state);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details), new { Id = state.Country.Id});
+            return RedirectToAction(nameof(Details), new { Id = state.Country.Id });
         }
 
 
@@ -415,7 +416,7 @@ namespace Shop.Controllers
             }
             return View(model);
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> EditCity(int? id)
         {
@@ -426,8 +427,8 @@ namespace Shop.Controllers
 
             City city = await _context.Cities
                 .Include(city => city.State)
-                .FirstOrDefaultAsync(city => city.Id == id); 
-                
+                .FirstOrDefaultAsync(city => city.Id == id);
+
 
             if (city == null)
             {
