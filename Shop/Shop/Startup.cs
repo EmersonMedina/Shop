@@ -50,10 +50,11 @@ namespace Shop
                 options.AccessDeniedPath = "/Account/NotAuthorized";
             });
 
-            services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
-            services.AddScoped<ICombosHelper, CombosHelper>(); 
+            services.AddScoped<ICombosHelper, CombosHelper>();
+            services.AddScoped<IBlopHelper, BlopHelper>();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
           
         }
 
