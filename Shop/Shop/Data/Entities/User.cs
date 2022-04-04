@@ -38,7 +38,7 @@ namespace Shop.Data.Entities
 
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7057/images/no_image.png"
+            ? $"https://localhost:44304/images/no_image.png"
             : $"https://shopasp.blob.core.windows.net/users/{ImageId}";
 
         [Display(Name = "Tipo de usuario")]
