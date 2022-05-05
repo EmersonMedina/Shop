@@ -26,8 +26,8 @@ namespace Shop.Data
             await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Juan", "Zuluaga", "zulu@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
-            await CheckUserAsync("1011", "Emerson", "Medina", "emermedina877@gmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
-            await CheckUserAsync("1012", "Emer", "Medina", "emersonmedina877@gmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.User);
+            await CheckUserAsync("1011", "Emerson", "Medina", "emermedina@gmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckUserAsync("1012", "Emer", "Medina", "emersonmedina@gmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.User);
         }
 
         private async Task<User> CheckUserAsync(
@@ -57,6 +57,10 @@ namespace Shop.Data
 
                 await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+
             }
 
             return user;

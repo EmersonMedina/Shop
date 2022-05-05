@@ -36,6 +36,8 @@ namespace Shop
             //TODO: Make strongest password
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.SignIn.RequireConfirmedEmail = true; 
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
                 cfg.Password.RequiredUniqueChars = 0;
@@ -46,7 +48,9 @@ namespace Shop
                 cfg.Lockout.MaxFailedAccessAttempts = 3;
                 cfg.Lockout.AllowedForNewUsers = true;
 
-            }).AddEntityFrameworkStores<DataContext>();
+            })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<DataContext>();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -55,11 +59,11 @@ namespace Shop
             });
 
             services.AddTransient<SeedDb>();
+            services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IBlopHelper, BlopHelper>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
