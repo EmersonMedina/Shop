@@ -62,7 +62,7 @@ namespace Shop.Models
 
         public IEnumerable<SelectListItem> States { get; set; }
 
-        [Display(Name = "Ciuadad")]
+        [Display(Name = "Ciudad")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una ciudad.")]
         public int CityId { get; set; }
 
