@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Data.Entities
 {
@@ -11,5 +12,6 @@ namespace Shop.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Name { get; set; }
 
+        public ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }
