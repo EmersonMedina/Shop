@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Shop.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Shop.Helpers
     public interface ICombosHelper
     {
         Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
+       
+        Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync(IEnumerable<Category> filter); 
 
         Task<IEnumerable<SelectListItem>> GetComboCountriesAsync();
 
