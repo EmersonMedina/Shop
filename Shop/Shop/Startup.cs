@@ -63,6 +63,7 @@ namespace Shop
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IBlopHelper, BlopHelper>();
+            services.AddScoped<IOrdersHelper, OrdersHelper>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

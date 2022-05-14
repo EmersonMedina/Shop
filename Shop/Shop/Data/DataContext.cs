@@ -29,6 +29,8 @@ namespace Shop.Data
         public DbSet<State> States { get; set; }
 
         public DbSet<TemporalSale> TemporalSales { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleDetail> SaleDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
