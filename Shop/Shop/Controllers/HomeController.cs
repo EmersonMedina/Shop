@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -47,7 +48,7 @@ namespace Shop.Controllers
                     .Where(ts => ts.User.Id == user.Id)
                     .SumAsync(ts => ts.Quantity);
             }
-
+ 
             return View(model);
         }
 
