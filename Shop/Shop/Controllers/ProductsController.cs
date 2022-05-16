@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -18,12 +19,14 @@ namespace Shop.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlopHelper _blopHelper;
+        private readonly INotyfService _notyfService;
 
-        public ProductsController(DataContext context, ICombosHelper combosHelper, IBlopHelper blobHelper)
+        public ProductsController(DataContext context, ICombosHelper combosHelper, IBlopHelper blobHelper, INotyfService notyfService)
         {
             _context = context;
             _combosHelper = combosHelper;
             _blopHelper = blobHelper;
+            _notyfService = notyfService;
         }
 
         [HttpGet]
@@ -93,16 +96,20 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                        _notyfService.Error("Ya existe un producto con el mismo nombre."); 
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
+
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message); 
                 }
             }
 
@@ -159,16 +166,20 @@ namespace Shop.Controllers
             {
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
-                    ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                    //ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
+                    _notyfService.Error("Ya existe un producto con el mismo nombre."); 
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    _notyfService.Error(dbUpdateException.InnerException.Message); 
                 }
             }
             catch (Exception exception)
             {
-                ModelState.AddModelError(string.Empty, exception.Message);
+                //ModelState.AddModelError(string.Empty, exception.Message);
+                _notyfService.Error(exception.Message);
+
             }
 
             return View(model);
@@ -277,7 +288,8 @@ namespace Shop.Controllers
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message); 
                 }
             }
 
@@ -364,7 +376,8 @@ namespace Shop.Controllers
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message); 
                 }
             }
 

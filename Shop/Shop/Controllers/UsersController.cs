@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Common;
@@ -22,14 +23,16 @@ namespace Shop.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IBlopHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly INotyfService _notifyService;
 
-        public UsersController(DataContext context, IUserHelper userHelper, ICombosHelper combosHelper, IBlopHelper blobHelper, IMailHelper mailHelper)
+        public UsersController(DataContext context, IUserHelper userHelper, ICombosHelper combosHelper, IBlopHelper blobHelper, IMailHelper mailHelper, INotyfService notifyService)
         {
             _context = context;
             _userHelper = userHelper;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
             _mailHelper = mailHelper;
+            _notifyService = notifyService;
         }
 
         [HttpGet]
@@ -76,7 +79,8 @@ namespace Shop.Controllers
 
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    //ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _notifyService.Error("Este correo ya está siendo usado.");
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
                     model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
@@ -99,11 +103,13 @@ namespace Shop.Controllers
                         $"<hr/><br/><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    ViewBag.Message = "Las instrucciones para habilitar el administrador han sido enviadas al correo.";
+                    //ViewBag.Message = "Las instrucciones para habilitar el administrador han sido enviadas al correo.";
+                    _notifyService.Information("Las instrucciones para habilitar el administrador han sido enviadas al correo."); 
                     return View(model);
                 }
 
-                ModelState.AddModelError(string.Empty, response.Message);
+                //ModelState.AddModelError(string.Empty, response.Message);
+                _notifyService.Error(response.Message); 
 
             }
 

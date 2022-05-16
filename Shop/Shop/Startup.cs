@@ -29,7 +29,7 @@ namespace Shop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter;});
+            services.AddNotyf(config => { config.DurationInSeconds = 300; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight;});
             services.AddControllersWithViews();
             services.AddDbContext<DataContext>(o => {
                 o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 

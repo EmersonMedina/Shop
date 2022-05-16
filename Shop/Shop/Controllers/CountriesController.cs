@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -15,10 +16,12 @@ namespace Shop.Controllers
     public class CountriesController : Controller
     {
         private readonly DataContext _context;
+        private readonly INotyfService _notyfService;
 
-        public CountriesController(DataContext context)
+        public CountriesController(DataContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
         [HttpGet]
@@ -70,16 +73,21 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        _notyfService.Error("Ya existe un país con el mismo nombre.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                       // ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
+
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message);
+
                 }
             }
             return View(country);
@@ -125,16 +133,21 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
+                        _notyfService.Error("Ya existe un país con el mismo nombre."); 
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
+
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message);
+
                 }
             }
             return View(country);
@@ -217,16 +230,21 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un departamento/estado con el mismo nombre en este país.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe un departamento/estado con el mismo nombre en este país.");
+                        _notyfService.Error("Ya existe un departamento/estado con el mismo nombre en este país."); 
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
+
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message);
+
                 }
             }
             return View(model);
@@ -286,16 +304,21 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe un departamento/estado con el mismo nombre en este país.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe un departamento/estado con el mismo nombre en este país.");
+                        _notyfService.Error("Ya existe un departamento/estado con el mismo nombre en este país.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
+
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message);
+
                 }
             }
             return View(model);
@@ -402,16 +425,20 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre en este departamento/estado.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre en este departamento/estado.");
+                        _notyfService.Error("Ya existe una ciudad con el mismo nombre en este departamento/estado."); 
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message);
+
                 }
             }
             return View(model);
@@ -472,16 +499,21 @@ namespace Shop.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre en este departamento/estado.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre en este departamento/estado.");
+                        _notyfService.Error("Ya existe una ciudad con el mismo nombre en este departamento/estado.");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        _notyfService.Error(dbUpdateException.InnerException.Message);
+
                     }
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                   // ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message);
+
                 }
             }
             return View(model);

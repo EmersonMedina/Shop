@@ -22,13 +22,15 @@ namespace Shop.Controllers
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
         private readonly IOrdersHelper _ordersHelper;
+        private readonly INotyfService _notyfService;
 
-        public HomeController(ILogger<HomeController> logger, DataContext dataContext, IUserHelper userHelper, IOrdersHelper ordersHelper)
+        public HomeController(ILogger<HomeController> logger, DataContext dataContext, IUserHelper userHelper, IOrdersHelper ordersHelper, INotyfService notyfService)
         {
             _logger = logger;
             _context = dataContext;
             _userHelper = userHelper;
             _ordersHelper = ordersHelper;
+            _notyfService = notyfService;
         }
 
         public async Task<IActionResult> Index()
@@ -208,7 +210,9 @@ namespace Shop.Controllers
                 return RedirectToAction(nameof(OrderSuccess));
             }
 
-            ModelState.AddModelError(string.Empty, response.Message);
+            //ModelState.AddModelError(string.Empty, response.Message);
+            _notyfService.Error(response.Message); 
+            
             return View(model);
         }
 
@@ -317,7 +321,8 @@ namespace Shop.Controllers
                 }
                 catch (Exception exception)
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    //ModelState.AddModelError(string.Empty, exception.Message);
+                    _notyfService.Error(exception.Message); 
                     return View(model);
                 }
 
