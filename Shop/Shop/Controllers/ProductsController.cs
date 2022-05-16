@@ -90,25 +90,22 @@ namespace Shop.Controllers
                 {
                     _context.Add(product);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Producto agregado exitosamente"); 
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
                         _notyfService.Error("Ya existe un producto con el mismo nombre."); 
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
-
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message); 
                 }
             }
@@ -160,24 +157,22 @@ namespace Shop.Controllers
                 product.Stock = model.Stock;
                 _context.Update(product);
                 await _context.SaveChangesAsync();
+                _notyfService.Information("Producto editado exitosamente"); 
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
-                    //ModelState.AddModelError(string.Empty, "Ya existe un producto con el mismo nombre.");
                     _notyfService.Error("Ya existe un producto con el mismo nombre."); 
                 }
                 else
                 {
-                    //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                     _notyfService.Error(dbUpdateException.InnerException.Message); 
                 }
             }
             catch (Exception exception)
             {
-                //ModelState.AddModelError(string.Empty, exception.Message);
                 _notyfService.Error(exception.Message);
 
             }
@@ -284,11 +279,11 @@ namespace Shop.Controllers
                 {
                     _context.Add(productImage);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Imagen agregada exitosamente"); 
                     return RedirectToAction(nameof(Details), new { Id = product.Id });
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message); 
                 }
             }
@@ -372,11 +367,11 @@ namespace Shop.Controllers
                 {
                     _context.Add(productCategory);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Categoria agregada exitosamente"); 
                     return RedirectToAction(nameof(Details), new { Id = product.Id });
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message); 
                 }
             }

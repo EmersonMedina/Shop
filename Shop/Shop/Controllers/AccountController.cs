@@ -141,7 +141,6 @@ namespace Shop.Controllers
                     return RedirectToAction(nameof(Login));
                 }
 
-                //ModelState.AddModelError(string.Empty, response.Message);
                 _notifyService.Error(response.Message); 
 
             }
@@ -285,11 +284,11 @@ namespace Shop.Controllers
                     IdentityResult result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
+                        _notifyService.Success("Contraseña cambiada exitosamente"); 
                         return RedirectToAction("ChangeUser");
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
                         _notifyService.Error(result.Errors.FirstOrDefault().Description); 
                     }
                 }

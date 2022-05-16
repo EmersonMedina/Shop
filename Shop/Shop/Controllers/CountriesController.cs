@@ -67,25 +67,23 @@ namespace Shop.Controllers
                 {
                     _context.Add(country);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("País agregado exitosamente"); 
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
                         _notyfService.Error("Ya existe un país con el mismo nombre.");
                     }
                     else
                     {
-                       // ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
 
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
 
                 }
@@ -127,25 +125,23 @@ namespace Shop.Controllers
                 {
                     _context.Update(country);
                     await _context.SaveChangesAsync();
+                    _notyfService.Information("País editado exitosamente"); 
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe un país con el mismo nombre.");
                         _notyfService.Error("Ya existe un país con el mismo nombre."); 
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
 
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
 
                 }
@@ -180,6 +176,7 @@ namespace Shop.Controllers
             var country = await _context.Countries.FindAsync(id);
             _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
+            _notyfService.Information("País borrado exitosamente"); 
             return RedirectToAction(nameof(Index));
         }
 
@@ -224,25 +221,24 @@ namespace Shop.Controllers
 
                     _context.Add(state);
                     await _context.SaveChangesAsync();
+
+                    _notyfService.Success("Estado/departamento agregado exitosamete"); 
                     return RedirectToAction(nameof(Details), new { Id = model.CountryId });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe un departamento/estado con el mismo nombre en este país.");
                         _notyfService.Error("Ya existe un departamento/estado con el mismo nombre en este país."); 
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
 
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
 
                 }
@@ -298,25 +294,24 @@ namespace Shop.Controllers
 
                     _context.Update(state);
                     await _context.SaveChangesAsync();
+
+                    _notyfService.Information("Estado/departamento editado exitosamente"); 
                     return RedirectToAction(nameof(Details), new { Id = model.CountryId });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe un departamento/estado con el mismo nombre en este país.");
                         _notyfService.Error("Ya existe un departamento/estado con el mismo nombre en este país.");
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
 
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
 
                 }
@@ -374,6 +369,8 @@ namespace Shop.Controllers
                 .FirstOrDefaultAsync(s => s.Id == id);
             _context.States.Remove(state);
             await _context.SaveChangesAsync();
+
+            _notyfService.Information("Estado/departamento eliminado exitosamente"); 
             return RedirectToAction(nameof(Details), new { Id = state.Country.Id });
         }
 
@@ -419,24 +416,22 @@ namespace Shop.Controllers
 
                     _context.Add(city);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Ciudad agregada exitosamente"); 
                     return RedirectToAction(nameof(DetailsState), new { Id = model.StateId });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre en este departamento/estado.");
                         _notyfService.Error("Ya existe una ciudad con el mismo nombre en este departamento/estado."); 
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
 
                 }
@@ -493,25 +488,23 @@ namespace Shop.Controllers
 
                     _context.Update(city);
                     await _context.SaveChangesAsync();
+                    _notyfService.Information("Ciudad editada exitosamente"); 
                     return RedirectToAction(nameof(DetailsState), new { Id = model.StateId });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre en este departamento/estado.");
                         _notyfService.Error("Ya existe una ciudad con el mismo nombre en este departamento/estado.");
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
 
                     }
                 }
                 catch (Exception exception)
                 {
-                   // ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
 
                 }
@@ -568,6 +561,8 @@ namespace Shop.Controllers
                 .FirstOrDefaultAsync(c => c.Id == id);
             _context.Cities.Remove(city);
             await _context.SaveChangesAsync();
+
+            _notyfService.Information("Ciudad eliminada exitosamente"); 
             return RedirectToAction(nameof(DetailsState), new { Id = city.State.Id });
         }
     }

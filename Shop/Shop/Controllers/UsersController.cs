@@ -79,7 +79,6 @@ namespace Shop.Controllers
 
                 if (user == null)
                 {
-                    //ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
                     _notifyService.Error("Este correo ya está siendo usado.");
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
@@ -103,12 +102,10 @@ namespace Shop.Controllers
                         $"<hr/><br/><p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    //ViewBag.Message = "Las instrucciones para habilitar el administrador han sido enviadas al correo.";
                     _notifyService.Information("Las instrucciones para habilitar el administrador han sido enviadas al correo."); 
                     return View(model);
                 }
 
-                //ModelState.AddModelError(string.Empty, response.Message);
                 _notifyService.Error(response.Message); 
 
             }

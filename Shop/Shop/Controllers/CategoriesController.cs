@@ -43,24 +43,22 @@ namespace Shop.Controllers
                 {
                     _context.Add(category);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Categoría agregada exitosamente"); 
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
                         _notyfService.Error("Ya existe una categoría con el mismo nombre."); 
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message); 
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message); 
                 }
             }
@@ -98,25 +96,23 @@ namespace Shop.Controllers
                 {
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Categoría editada exitosamente"); 
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        //ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
                         _notyfService.Error("Ya existe una categoría con el mismo nombre."); 
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                         _notyfService.Error(dbUpdateException.InnerException.Message);
 
                     }
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message);
                 }
             }
@@ -166,7 +162,7 @@ namespace Shop.Controllers
             var category = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
-            _notyfService.Success("Categoría borrada exitosamente"); 
+            _notyfService.Information("Categoría borrada exitosamente"); 
             return RedirectToAction(nameof(Index));
         }
 

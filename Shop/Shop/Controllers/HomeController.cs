@@ -210,7 +210,6 @@ namespace Shop.Controllers
                 return RedirectToAction(nameof(OrderSuccess));
             }
 
-            //ModelState.AddModelError(string.Empty, response.Message);
             _notyfService.Error(response.Message); 
             
             return View(model);
@@ -321,7 +320,6 @@ namespace Shop.Controllers
                 }
                 catch (Exception exception)
                 {
-                    //ModelState.AddModelError(string.Empty, exception.Message);
                     _notyfService.Error(exception.Message); 
                     return View(model);
                 }
